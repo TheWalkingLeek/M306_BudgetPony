@@ -8,6 +8,12 @@ The app uses VueJS as frontend and nodejs express as backend. The Database is Po
 
 ## Setup
 
+### Frontend
+
+- `cd frontend`
+- `npm install`
+- `npm run serve`
+
 ### Backend
 
 - `cd backend`
