@@ -1,5 +1,6 @@
-CREATE TABLE test(
+CREATE TABLE "user"(
   id int,
-  name varchar(30),
+  email varchar(50),
+  password varchar(50),
   PRIMARY KEY(id)
 );

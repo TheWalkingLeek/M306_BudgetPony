@@ -5,15 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app/app.js",
+    "start": "nodemon -r esm app/app.js",
     "db-init": "docker exec -i budget_pony_db psql -d budget_pony_dev -U pony -p 5432 < db/db-init.sql"
-
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "esm": "^3.2.25",
     "express": "^4.17.1",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "pg": "^7.18.2"
   }
 }
-
