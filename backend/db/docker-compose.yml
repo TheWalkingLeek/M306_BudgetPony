@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  db:
+    image: postgres:alpine
+    container_name: budget_pony_db
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_DB=budget_pony_dev
+      - POSTGRES_USER=pony
+      - POSTGRES_PASSWORD=budget_pony
