@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app/app.js",
-    "db-init": "cat db/db-init.sql | docker exec budget_pony_db psql -d budget_pony_dev -U pony -p budget_pony -c"
+    "db-init": "docker exec -i budget_pony_db psql -d budget_pony_dev -U pony -p 5432 < db/db-init.sql"
+
   },
   "author": "",
   "license": "ISC",
@@ -15,3 +16,4 @@
     "nodemon": "^2.0.2"
   }
 }
+
