@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>BudgetPony</h1>
+    <h2>Home</h2>
   </div>
 </template>
 
@@ -9,3 +9,7 @@ export default {
   name: "Home"
 };
 </script>
+
+<style>
+
+</style>
