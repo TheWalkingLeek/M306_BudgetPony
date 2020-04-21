@@ -1,7 +1,9 @@
-const SERIALIZED_USER_COLUMNS = ['id', 'email'];
+const SERIALIZED_USER_COLUMNS = ["id", "email"];
+const SERIALIZED_CATEGORY_COLUMNS = ["name", "budget", "userId"];
 
 const SERIALIZED_COLUMNS = {
   user: SERIALIZED_USER_COLUMNS,
+  category: SERIALIZED_USER_COLUMNS
 };
 
 export default function serializeSqlResult(model, sqlResult) {
@@ -10,7 +12,7 @@ export default function serializeSqlResult(model, sqlResult) {
 
   let serializedRows = sqlResult.rows.map(row => serializeSqlRow(model, row));
   return {
-    model: serializedRows,
+    model: serializedRows
   };
 }
 
