@@ -22,3 +22,5 @@ function serializeSqlRow(model, row) {
   });
   return res;
 }
+
+export { serializeSqlRow };
