@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-    <HeaderComponent />
-
     <nav id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/login">Login</router-link> |
@@ -12,15 +10,7 @@
   </div>
 </template>
 
-<script>
-import HeaderComponent from "./components/HeaderComponent";
-
-export default {
-  components: { HeaderComponent }
-};
-</script>
-
-<style lang="scss" scoped>
+<style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -32,14 +22,14 @@ export default {
 
 #nav {
   padding: 30px;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>

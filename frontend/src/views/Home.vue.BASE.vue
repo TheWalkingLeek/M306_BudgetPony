@@ -1,7 +1,6 @@
 <template>
-  <div class="route-container">
+  <div class="home">
     <h1>BudgetPony</h1>
-    <p>{{ $route.name }}</p>
   </div>
 </template>
 
@@ -10,5 +9,3 @@ export default {
   name: "Home"
 };
 </script>
-
-<style lang="scss" scoped></style>
