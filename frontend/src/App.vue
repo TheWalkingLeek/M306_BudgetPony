@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <nav id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+      <router-link to="/login">Login</router-link> |
+      <router-link to="/register">Register</router-link>
+    </nav>
+    <h1>BudgetPony</h1>
     <router-view />
   </div>
 </template>
@@ -15,6 +17,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin: 0 10vw;
 }
 
 #nav {
