@@ -15,10 +15,10 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li v-for="link in links" :key="link.to" class="nav-item">
-          <router-link :to="{ name: link.to }" class="nav-link">
+        <li v-for="link in links" :key="link.name" class="nav-item">
+          <router-link :to="{ name: link.name }" class="nav-link">
             {{ link.title }}
-            <span v-if="link.to === $route.name" class="sr-only"
+            <span v-if="link.name === $route.name" class="sr-only"
               >(current)</span
             >
           </router-link>
@@ -34,10 +34,12 @@ export default {
   data: () => {
     return {
       links: [
-        { to: "home", title: "Home" },
-        { to: "collect", title: "Collect" },
-        { to: "categories", title: "Categories" },
-        { to: "planning", title: "Planning" }
+        { name: "home", title: "Home" },
+        { name: "collect", title: "Collect" },
+        { name: "categories", title: "Categories" },
+        { name: "planning", title: "Planning" },
+        { name: "login", title: "Login" },
+        { name: "register", title: "Register" }
       ]
     };
   }
