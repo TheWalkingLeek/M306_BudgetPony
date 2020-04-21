@@ -5,7 +5,7 @@ import router from "./router";
 import store from "./store";
 
 import "./custom.scss";
-import "bootstrap/dist/js/bootstrap.bundle.js";
+import "bootstrap/dist/js/bootstrap.min.js";
 
 Vue.config.productionTip = false;
 
