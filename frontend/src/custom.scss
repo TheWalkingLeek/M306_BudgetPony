@@ -1,3 +1,10 @@
+/* Bootstrap */
+/* Override variables */
 $primary: #0eaee3;
 
-// @import "~bootstrap/scss/bootstrap"
+/* Load */
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';
+
+/* --- */
+/* Global scss things */

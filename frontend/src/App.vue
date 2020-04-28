@@ -1,15 +1,23 @@
 <template>
-  <div id="app">
-    <HeaderComponent />
-    <router-view />
+  <div id="app" class="container p-0 my-0 mx-auto">
+    <div class="header">
+      <HeaderComponent />
+    </div>
+    <div class="router-view-content">
+      <router-view />
+    </div>
+    <div class="footer">
+      <FooterComponent />
+    </div>
   </div>
 </template>
 
 <script>
 import HeaderComponent from "./components/HeaderComponent";
+import FooterComponent from "./components/FooterComponent";
 
 export default {
-  components: { HeaderComponent }
+  components: { HeaderComponent, FooterComponent }
 };
 </script>
 
@@ -18,20 +26,27 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin: 0 10vw;
-}
 
-#nav {
-  padding: 30px;
+  display: flex;
+  flex-direction: column;
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  min-height: 100vh;
+  width: 100vw;
+  justify-content: stretch;
 
-    &.router-link-exact-active {
-      color: #42b983;
+  .header,
+  .footer {
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+
+  .router-view-content {
+    flex-shrink: 0;
+    flex-grow: 1;
+
+    > * {
+      height: 100%;
     }
   }
 }

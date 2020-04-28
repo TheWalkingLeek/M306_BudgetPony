@@ -1,16 +1,24 @@
 <template>
-  <b-navbar toggleable="lg" type="light" variant="light">
-    <b-navbar-brand href="#">Budgetpony M306</b-navbar-brand>
-    <b-navbar-toggle target="header-navbar-toggle"></b-navbar-toggle>
-    <b-collapse id="header-navbar-toggle" is-nav>
-      <b-navbar-nav>
-        <b-nav-item v-for="link in links" :key="link.name" :to="{ name:link.name }">
-          {{ link.title }}
-          <span v-if="link.name === $route.name" class="sr-only">(current)</span>
-        </b-nav-item>
-      </b-navbar-nav>
-    </b-collapse>
-  </b-navbar>
+  <header>
+    <b-navbar toggleable="lg" type="light" variant="light">
+      <b-navbar-brand href="#">Budgetpony M306</b-navbar-brand>
+      <b-navbar-toggle target="header-navbar-toggle"></b-navbar-toggle>
+      <b-collapse id="header-navbar-toggle" is-nav>
+        <b-navbar-nav>
+          <b-nav-item
+            v-for="link in links"
+            :key="link.name"
+            :to="{ name: link.name }"
+          >
+            {{ link.title }}
+            <span v-if="link.name === $route.name" class="sr-only"
+              >(current)</span
+            >
+          </b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+  </header>
 </template>
 
 <script>

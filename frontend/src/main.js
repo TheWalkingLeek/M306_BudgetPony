@@ -1,14 +1,12 @@
 import "@babel/polyfill";
 import "mutationobserver-shim";
+import "./custom.scss";
+import "./plugins/bootstrap";
 import Vue from "vue";
-import "./plugins/bootstrap-vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
-
-import "./custom.scss";
-import "bootstrap/dist/js/bootstrap.min.js";
 
 Vue.config.productionTip = false;
 
