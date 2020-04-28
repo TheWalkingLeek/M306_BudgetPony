@@ -1,19 +1,28 @@
 const SERIALIZED_USER_COLUMNS = ["id", "email"];
-const SERIALIZED_CATEGORY_COLUMNS = ["name", "budget", "userId"];
+const SERIALIZED_CATEGORY_COLUMNS = ["id", "name", "budget", "userid"];
+const SERIALIZED_TRANSACTION_COLUMNS = [
+  "id",
+  "description",
+  "amount",
+  "categoryid",
+  "createdat"
+];
 
 const SERIALIZED_COLUMNS = {
   user: SERIALIZED_USER_COLUMNS,
-  category: SERIALIZED_USER_COLUMNS
+  category: SERIALIZED_CATEGORY_COLUMNS,
+  transaction: SERIALIZED_TRANSACTION_COLUMNS
 };
 
-export default function serializeSqlResult(model, sqlResult) {
-  if (sqlResult.rowCount === 1)
-    return serializeSqlRow(model, sqlResult.rows[0]);
+export function serializeSqlResult(model, sqlResult) {
+  return serializeSqlRow(model, sqlResult.rows[0]);
+}
 
+export function serializeSqlResults(model, sqlResult) {
   let serializedRows = sqlResult.rows.map(row => serializeSqlRow(model, row));
-  return {
-    model: serializedRows
-  };
+  let json = {};
+  json[model] = serializedRows;
+  return json;
 }
 
 function serializeSqlRow(model, row) {

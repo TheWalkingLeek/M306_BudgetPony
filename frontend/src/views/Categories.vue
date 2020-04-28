@@ -1,8 +1,8 @@
 <template>
   <div class="categories">
-    <div class="container">
+    <div class="">
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Kategorien</h5>
@@ -13,8 +13,15 @@
                 class="btn btn-primary">
                    {{ category.name }}
                 </button>
+                <div id="newCategoryForm" v-if="this.newCategory">
+                  <input v-model="newCategory.name" placeholder="Neue Kategorie">
+                  <button v-on:click="submitNewCategory()">Speichern</button>
+                  <button v-on:click="abortNewCategory()">Abbrechen</button>
+                </div>
               </div>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            </div>
+            <div class="card-footer">
+              <button v-on:click="createCategory()">Erfassen</button>
             </div>
           </div>
         </div>
@@ -22,7 +29,26 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Ausgaben</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td>Datum</td>
+                    <td>Bezeichnung</td>
+                    <td>Betrag</td>
+                    <td>Option</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="transaction in transactions"
+                    v-bind:key="transaction.id">
+                    <td>{{ transaction.createdat }}</td>
+                    <td>{{ transaction.description }}</td>
+                    <td>{{ transaction.amount }}</td>
+                    <td><button v-on:click="deleteTransaction(transaction)">delete</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            <h6>Total: {{ total }}</h6>
             </div>
           </div>
         </div>
@@ -34,16 +60,65 @@
 <script>
 export default {
   data() {
-    return { categories: [{ name: "Freizeit"}, { name: "Essen" }] };
+    this.refreshCategories();
+    return { categories: [], transactions: [], newCategory: null };
+  },
+
+  computed: {
+    total: function () {
+      let sum = 0
+      this.transactions.forEach(t => sum += t.amount);
+      return sum;
+    }
   },
 
   methods: {
+    refreshCategories() {
+      fetch("/api/category")
+        .then(response => response.json())
+        .then(response => {
+          this.categories = response.category;
+          this.switchSelectedCategory(this.categories[0]);
+        });
+    },
+    
     switchSelectedCategory(category) {
-       console.log(category.name);
+      fetch("/api/category/" + (category.id || category) + "/transaction")
+        .then(response => response.json())
+        .then(response => {
+            this.transactions = response.transaction
+      });
+    },
+    
+    deleteTransaction(transaction) {
+      fetch("/api/transaction/" + transaction.id, { method: "DELETE" }).then(() => this.switchSelectedCategory(transaction.categoryid));
+    },
+    
+    createCategory() {
+      this.newCategory = {};
+    },
+    
+    submitNewCategory() {
+      fetch("/api/category", { method: "POST", 
+          headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.newCategory)})
+        .then(() => this.refreshCategories());
+    },
+    
+    abortNewCategory() {
+      this.newCategory = null;
     }
   }
 };
 </script>
 
 <style scoped>
+#newCategoryForm {
+  margin-top: 20%;
+  border: black solid 1px;
+  border-radius: 
+}
 </style>
