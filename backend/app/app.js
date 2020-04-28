@@ -1,8 +1,8 @@
-import serializeSqlResult, { serializeSqlRow } from './serializer.js';
-var passport = require('passport');
-var Strategy = require('passport-local').Strategy;
-var ensureLogin = require('connect-ensure-login')
-var express = require('express');
+import serializeSqlResult from './serializer.js';
+const passport = require('passport');
+const Strategy = require('passport-local').Strategy;
+const ensureLogin = require('connect-ensure-login')
+const express = require('express');
 const { Pool } = require('pg');
 
 const psqlPool = new Pool({
@@ -15,20 +15,20 @@ const psqlPool = new Pool({
 
 psqlPool.connect();
 
-passport.use(new Strategy({ usernameField: 'email' },
-  function(email, password, cb) {
+passport.use(new Strategy({ usernameField: 'email', session: true },
+  function(email, password, done) {
     psqlPool.query(
       'SELECT * from "user" WHERE email=$1 and password=$2',
       [email, password],
       (err, sql) => {
         if (err) {
-          return cb(err);
+          return done(err);
         }
-        if (!sql) {
-          return cb(null, false);
+        if (!sql.rows.length) {
+          return done(null, false);
         }
 
-        return cb(null, serializeSqlRow(sql));
+        return done(null, serializeSqlResult('user', sql));
       },
     );
   }
@@ -46,15 +46,15 @@ passport.deserializeUser(function(id, cb) {
       if (err) {
         return cb(err);
       }
-      cb(null, serializeSqlRow(user));
+      cb(null, serializeSqlResult('user', sql));
     },
   );
 });
 
 var app = express();
 
-app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(require('body-parser').json());
+app.use(require('express-session')({ secret: 'pony', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -89,29 +89,34 @@ app.post('/register',
   function(req, res) {
     psqlPool.query(
       'INSERT INTO "user" (email, password) VALUES ($1, $2)',
-      [req.params.email, req.params.password],
+      [req.body.email, req.body.password],
       (err, sql) => {
         if (err) {
-          res.status(400).json(err);
+          return res.status(400).json(err.detail);
         }
 
-        res.json(serializeSqlResult('user', sql));
-      },
+        psqlPool.query(
+          'SELECT * from "user" WHERE email=$1',
+          [req.body.email],
+          (err, sql) => {
+            res.json(serializeSqlResult('user', sql));
+          }
+        )
+      }
     );
-    res.redirect('/');
   }
 );
 
 app.post('/login',
-  passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }),
+  passport.authenticate('local'),
   function(req, res) {
-    res.redirect('/');
+    res.json("Successfully logged in");
   }
 );
 
 app.post('/logout',
   function(req, res){
     req.logout();
-    res.redirect('/');
+    res.json();
   }
 );
