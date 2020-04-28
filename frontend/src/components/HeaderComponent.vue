@@ -1,31 +1,16 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Budgetpony M306</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li v-for="link in links" :key="link.name" class="nav-item">
-          <router-link :to="{ name: link.name }" class="nav-link">
-            {{ link.title }}
-            <span v-if="link.name === $route.name" class="sr-only"
-              >(current)</span
-            >
-          </router-link>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <b-navbar toggleable="lg" type="light" variant="light">
+    <b-navbar-brand href="#">Budgetpony M306</b-navbar-brand>
+    <b-navbar-toggle target="header-navbar-toggle"></b-navbar-toggle>
+    <b-collapse id="header-navbar-toggle" is-nav>
+      <b-navbar-nav>
+        <b-nav-item v-for="link in links" :key="link.name" :to="{ name:link.name }">
+          {{ link.title }}
+          <span v-if="link.name === $route.name" class="sr-only">(current)</span>
+        </b-nav-item>
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
 </template>
 
 <script>
