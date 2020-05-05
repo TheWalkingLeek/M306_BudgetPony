@@ -5,10 +5,10 @@
       <b-row align-h="around">
         <b-col cols="8">
           <b-container fluid>
-            <b-row class="my-1" v-for="category in categories" :key="category">
+            <b-row class="my-1" v-for="category in categories" :key="category.id">
               <b-col sm="3">
                 <label :for="`category-${category}`" class="float-left"
-                  >{{ category }}:</label
+                  >{{ category.name }}:</label
                 >
               </b-col>
               <b-col sm="9">
@@ -16,8 +16,9 @@
                   :id="`category-${category}`"
                   class="text-right"
                   type="number"
-                  step="0.05"
+                  step="1"
                   min="0"
+                  v-model.number="category.budget"
                 ></b-form-input>
               </b-col>
             </b-row>
@@ -25,7 +26,9 @@
           <div id="stroke"></div>
           <div>
             <label class="float-left ml-3 mt-2">Einkommen:</label>
-            <label class="float-right mr-3 mt-2">700 CHF</label>
+            <label class="float-right mr-3 mt-2"
+              >{{ categories.reduce((b, n) => b + n.budget, 0) }} CHF</label
+            >
           </div>
         </b-col>
         <b-col cols="3">
@@ -39,8 +42,9 @@
                   class="text-right"
                   type="number"
                   step="1"
-                  min="0"
+                  min="1"
                   max="28"
+                  v-model.number="user.salaryday"
                 ></b-form-input>
               </b-col>
             </b-row>
@@ -49,8 +53,8 @@
       </b-row>
       <b-container>
         <b-row>
-            <b-button variant="primary" class="m-1 ml-auto">Speichern</b-button>
-            <b-button variant="secondary" class="m-1">Abbrechen</b-button>
+          <b-button variant="primary" class="m-1 ml-auto">Speichern</b-button>
+          <b-button variant="secondary" class="m-1">Abbrechen</b-button>
         </b-row>
       </b-container>
     </b-container>
@@ -61,9 +65,29 @@
 export default {
   name: "Planning",
   data() {
+    this.refreshCategories();
+    this.getUser();
     return {
-      categories: ["Essen", "Sparen", "Transport", "Sport"]
+      categories: [],
+      user: {}
     };
+  },
+
+  methods: {
+    refreshCategories() {
+      fetch("/api/category")
+        .then(response => response.json())
+        .then(response => {
+          this.categories = response.category;
+        });
+    },
+    getUser() {
+      fetch("/api/user/" + 1)
+        .then(response => response.json())
+        .then(response => {
+          this.user = response;
+        });
+    }
   }
 };
 </script>
