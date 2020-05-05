@@ -1,16 +1,10 @@
-import { serializeSqlResult, serializeSqlResults } from "./serializer.js";
+import { serializeSqlResults, serializeSqlResult } from "./serializer.js";
 const passport = require("passport");
 const Strategy = require("passport-local").Strategy;
 const ensureLogin = require("connect-ensure-login");
-
-var express = require("express");
-var app = express();
-var bodyParser = require("body-parser");
-
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
+const express = require("express");
 const { Pool } = require("pg");
+
 const psqlPool = new Pool({
   user: "pony",
   host: "localhost",
@@ -60,7 +54,6 @@ passport.deserializeUser(function(id, cb) {
 var app = express();
 
 app.use(require("body-parser").json());
-
 app.use(
   cookieSession({
     name: "session",
@@ -130,7 +123,8 @@ app.get("/category", function(req, res) {
 });
 
 app.post("/category", function(req, res) {
-  console.log(req);
+  console.log(passport.session);
+  console.log(req.session);
   psqlPool.query(
     'INSERT INTO "category" (name) VALUES ($1)',
     [req.body.name],
