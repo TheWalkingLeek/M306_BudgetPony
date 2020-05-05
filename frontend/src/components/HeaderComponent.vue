@@ -25,16 +25,22 @@
 export default {
   name: "HeaderComponent",
   data: () => {
-    return {
-      links: [
+    return {};
+  },
+  computed: {
+    links() {
+      if (!this.$cookies.isKey("session")) {
+        return [        { name: "login", title: "Login" },
+        { name: "register", title: "Register" }]
+      }
+      return [
         { name: "home", title: "Home" },
         { name: "collect", title: "Collect" },
         { name: "categories", title: "Categories" },
         { name: "planning", title: "Planning" },
-        { name: "login", title: "Login" },
-        { name: "register", title: "Register" }
+        {name:"logout", title:"Logout"}
       ]
-    };
+    }
   }
 };
 </script>

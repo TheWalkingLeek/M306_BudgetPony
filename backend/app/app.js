@@ -4,6 +4,7 @@ const Strategy = require('passport-local').Strategy;
 const ensureLogin = require('connect-ensure-login')
 const express = require('express');
 const { Pool } = require('pg');
+const cookieSession = require('cookie-session')
 
 const psqlPool = new Pool({
   user: 'pony',
@@ -54,7 +55,12 @@ passport.deserializeUser(function(id, cb) {
 var app = express();
 
 app.use(require('body-parser').json());
-app.use(require('express-session')({ secret: 'pony', resave: false, saveUninitialized: false }));
+
+app.use(cookieSession({
+  name: 'session',
+  keys: ['pony'],
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
 app.use(passport.initialize());
 app.use(passport.session());
 
