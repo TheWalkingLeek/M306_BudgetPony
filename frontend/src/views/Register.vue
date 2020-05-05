@@ -1,7 +1,7 @@
 <template>
   <div class="register">
     <h2>Register</h2>
-    <b-form @submit="onSubmit" class="login-form">
+    <b-form @submit.prevent="register()" class="login-form">
       <b-form-group
         id="input-group-email"
         label="Email address:"
@@ -39,6 +39,50 @@ export default {
     return {
       form: { email: "", password: "" }
     };
+  },
+  methods: {
+    async register() {
+      let response = await fetch("/api/register", {
+        method: "POST",
+        body: JSON.stringify(this.form),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      const body = await response.json();
+
+      if (response.ok) {
+        this.$bvToast.toast(`Sie haben sich erfolgreich Registriert`, {
+          title: "Erfolgreich Registriert",
+          autoHideDelay: 5000,
+          appendToast: true,
+          variant: "success"
+        });
+
+        return this.$router.push("/");
+      } else if (body.includes("already exists.")) {
+        return this.$bvToast.toast(
+          `Die Angegebene Email wurde schon gebraucht`,
+          {
+            title: "Registration Fehlgeschlagen",
+            autoHideDelay: 5000,
+            appendToast: true,
+            variant: "danger"
+          }
+        );
+      }
+
+      this.$bvToast.toast(
+        `Es ist ein Fehler aufgetreten, versuchen Sie es erneut`,
+        {
+          title: "Registration Fehlgeschlagen",
+          autoHideDelay: 5000,
+          appendToast: true,
+          variant: "danger"
+        }
+      );
+    }
   }
 };
 </script>

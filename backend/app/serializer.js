@@ -1,4 +1,4 @@
-const SERIALIZED_USER_COLUMNS = ['email'];
+const SERIALIZED_USER_COLUMNS = ['id', 'email'];
 
 const SERIALIZED_COLUMNS = {
   user: SERIALIZED_USER_COLUMNS,
@@ -16,9 +16,10 @@ export default function serializeSqlResult(model, sqlResult) {
 
 function serializeSqlRow(model, row) {
   let res = {};
-  console.log(SERIALIZED_COLUMNS);
   SERIALIZED_COLUMNS[model].forEach(col => {
     res[col] = row[col];
   });
   return res;
 }
+
+export { serializeSqlRow };
