@@ -15,6 +15,7 @@
               >(current)</span
             >
           </b-nav-item>
+          <b-button v-b-modal.new-transaction-modal variant="primary">Erfassen</b-button>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
