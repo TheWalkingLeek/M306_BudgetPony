@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <h2>Login</h2>
-    <b-form @submit="onSubmit" class="login-form">
+    <b-form @submit.prevent="login()" class="login-form">
       <b-form-group
         id="input-group-email"
         label="Email address:"
@@ -41,6 +41,50 @@ export default {
     return {
       form: { email: "", password: "" }
     };
+  },
+  methods: {
+    async login() {
+      let response = await fetch("/api/login", {
+        method: "POST",
+        body: JSON.stringify(this.form),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      console.log(response);
+
+      if (response.ok) {
+        this.$bvToast.toast(`Sie haben sich erfolgreich Eingeloggt`, {
+          title: "Erfolgreich Eingeloggt",
+          autoHideDelay: 5000,
+          appendToast: true,
+          variant: "success"
+        });
+
+        return this.$router.push("/");
+      } else if (response.status === 401) {
+        return this.$bvToast.toast(
+          `Die Email und/oder das Passwort stimmen nicht`,
+          {
+            title: "Login Fehlgeschlagen",
+            autoHideDelay: 5000,
+            appendToast: true,
+            variant: "danger"
+          }
+        );
+      }
+
+      this.$bvToast.toast(
+        `Es ist ein Fehler aufgetreten, versuchen Sie es erneut`,
+        {
+          title: "Login Fehlgeschlagen",
+          autoHideDelay: 5000,
+          appendToast: true,
+          variant: "danger"
+        }
+      );
+    }
   }
 };
 </script>

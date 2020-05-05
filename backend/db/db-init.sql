@@ -1,6 +1,6 @@
 CREATE TABLE "user" (
   id SERIAL PRIMARY KEY,
-  email varchar(50),
+  email varchar(50) UNIQUE,
   password varchar(50),
   salaryDay int
 );
