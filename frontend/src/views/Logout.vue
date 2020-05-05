@@ -10,6 +10,9 @@ export default {
                 "Content-Type": "application/json"
             }
         });
+
+        this.$store.commit("loggedIn", false)
+
         return this.$router.push("/login");
     }
 }

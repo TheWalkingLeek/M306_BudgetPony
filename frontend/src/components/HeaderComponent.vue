@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     links() {
-      if (!this.$cookies.isKey("session")) {
+      if (!this.$store.state.loggedIn) {
         return [        { name: "login", title: "Login" },
         { name: "register", title: "Register" }]
       }

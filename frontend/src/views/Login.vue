@@ -60,6 +60,8 @@ export default {
           variant: "success"
         });
 
+        this.$store.commit("loggedIn", true)
+
         return this.$router.push("/");
       } else if (response.status === 401) {
         return this.$bvToast.toast(
