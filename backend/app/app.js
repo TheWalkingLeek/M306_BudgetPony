@@ -4,6 +4,7 @@ const Strategy = require("passport-local").Strategy;
 const ensureLogin = require("connect-ensure-login");
 const express = require("express");
 const { Pool } = require("pg");
+const cookieSession = require("cookie-session");
 
 const psqlPool = new Pool({
   user: "pony",
@@ -123,8 +124,7 @@ app.get("/category", function(req, res) {
 });
 
 app.post("/category", function(req, res) {
-  console.log(passport.session);
-  console.log(req.session);
+  console.log(passport);
   psqlPool.query(
     'INSERT INTO "category" (name) VALUES ($1)',
     [req.body.name],

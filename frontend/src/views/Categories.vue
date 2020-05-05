@@ -14,9 +14,9 @@
                    {{ category.name }}
                 </button>
                 <div id="newCategoryForm" v-if="this.newCategory">
-                  <input v-model="newCategory.name" placeholder="Neue Kategorie">
-                  <button v-on:click="submitNewCategory()">Speichern</button>
-                  <button v-on:click="abortNewCategory()">Abbrechen</button>
+                  <input v-model="newCategory.name" placeholder="Neue Kategorie" size="10">
+                  <button class="btn btn-primary" v-on:click="submitNewCategory()">Speichern</button>
+                  <button class="btn btn-secondary" v-on:click="abortNewCategory()">Abbrechen</button>
                 </div>
               </div>
             </div>
