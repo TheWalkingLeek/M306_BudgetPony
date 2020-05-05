@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon -r esm app/app.js",
     "db-clear": "docker exec -i budget_pony_db dropdb -e budget_pony_dev -U pony -p 5432",
-    "db-init": "docker exec -i budget_pony_db psql -d budget_pony_dev -U pony -p 5432 < db/db-init.sql"
+    "db-create": "docker exec -i budget_pony_db createdb -e budget_pony_dev -U pony -p 5432",
+    "db-init": "docker exec -i budget_pony_db psql -d budget_pony_dev -U pony -p 5432 < db/db-init.sql",
+    "db-data": "docker exec -i budget_pony_db psql -d budget_pony_dev -U pony -p 5432 < db/db-sample.sql",
+    "db": "npm run db-clear && npm run db-create && npm run db-init && npm run db-data"
   },
   "author": "",
   "license": "ISC",
