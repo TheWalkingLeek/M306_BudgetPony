@@ -77,16 +77,16 @@ export default {
       fetch("/api/category")
         .then(response => response.json())
         .then(response => {
-          this.categories = response.category;
+          this.categories = response.category || [];
           this.switchSelectedCategory(this.categories[0]);
         });
     },
     
     switchSelectedCategory(category) {
-      fetch("/api/category/" + (category.id || category) + "/transaction")
+      fetch("/api/category/" + category?.id + "/transaction")
         .then(response => response.json())
         .then(response => {
-            this.transactions = response.transaction
+            this.transactions = response.transaction || []
       });
     },
     
