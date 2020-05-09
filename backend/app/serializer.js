@@ -1,12 +1,11 @@
-const SERIALIZED_USER_COLUMNS = ['id', 'email'];
-const SERIALIZED_USER_COLUMNS = ['id', 'email', 'salaryday'];
-const SERIALIZED_CATEGORY_COLUMNS = ['id', 'name', 'budget', 'userid'];
+const SERIALIZED_USER_COLUMNS = ["id", "email", "salaryday"];
+const SERIALIZED_CATEGORY_COLUMNS = ["id", "name", "budget", "userid"];
 const SERIALIZED_TRANSACTION_COLUMNS = [
-  'id',
-  'description',
-  'amount',
-  'categoryid',
-  'createdat'
+  "id",
+  "description",
+  "amount",
+  "categoryid",
+  "createdat"
 ];
 
 const SERIALIZED_COLUMNS = {
@@ -33,5 +32,3 @@ function serializeSqlRow(model, row) {
   });
   return res;
 }
-
-export { serializeSqlRow };

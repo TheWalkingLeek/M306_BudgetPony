@@ -5,7 +5,11 @@
       <b-row align-h="around">
         <b-col cols="8">
           <b-container fluid>
-            <b-row class="my-1" v-for="category in categories" :key="category.id">
+            <b-row
+              class="my-1"
+              v-for="category in categories"
+              :key="category.id"
+            >
               <b-col sm="3">
                 <label :for="`category-${category}`" class="float-left"
                   >{{ category.name }}:</label
@@ -53,7 +57,12 @@
       </b-row>
       <b-container>
         <b-row>
-          <b-button variant="primary" class="m-1 ml-auto">Speichern</b-button>
+          <b-button
+            v-on:click="updatePlanning()"
+            variant="primary"
+            class="m-1 ml-auto"
+            >Speichern</b-button
+          >
           <b-button variant="secondary" class="m-1">Abbrechen</b-button>
         </b-row>
       </b-container>
@@ -75,7 +84,7 @@ export default {
 
   methods: {
     refreshCategories() {
-      fetch("/api/category")
+      fetch("/api/category/" + 1)
         .then(response => response.json())
         .then(response => {
           this.categories = response.category;
@@ -87,6 +96,26 @@ export default {
         .then(response => {
           this.user = response;
         });
+    },
+
+    updatePlanning() {
+      fetch("/api/user/" + 1, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(this.user)
+      }).then(() => this.getUser());
+
+      fetch("/api/categories", {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(this.categories)
+      }).then(() => this.refreshCategories());
     }
   }
 };

@@ -1,4 +1,4 @@
-import serializeSqlResult from './serializer.js';
+import {serializeSqlResult, serializeSqlResults} from './serializer.js';
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
 const ensureLogin = require('connect-ensure-login')
@@ -73,7 +73,6 @@ app.get('/user',
 );
 
 app.get('/user/:userId',
-  ensureLogin.ensureLoggedIn(),
   function(req, res) {
     psqlPool.query(
       'SELECT * from "user" WHERE id=$1',
@@ -120,6 +119,14 @@ app.post('/logout',
     res.json();
   }
 );
+
+app.put('/user/:userId', function(req, res) {
+        psqlPool.query('UPDATE "user" SET salaryday = $1 WHERE id = $2',
+            [req.body.salaryday, req.params.userId], () => {
+            res.json("updated salary day");
+        });
+    }
+);
 // category routes
 
 app.get("/category", function(req, res) {
@@ -128,15 +135,32 @@ app.get("/category", function(req, res) {
   });
 });
 
+// get category from userid
+app.get("/category/:userId", function(req, res) {
+    psqlPool.query('SELECT * from "category" WHERE userid = $1',[req.params.userId], (err, sql) => {
+        res.json(serializeSqlResults("category", sql));
+    });
+});
+
+
 app.post("/category", function(req, res) {
   console.log(req);
   psqlPool.query(
       'INSERT INTO "category" (name) VALUES ($1)',
       [req.body.name],
-      (err, sql) => {
+      () => {
         res.json("created!");
       }
   );
+});
+
+app.put("/categories", function(req, res) {
+    req.body.forEach( category => {
+            psqlPool.query(
+                'UPDATE "category" SET budget = $1 WHERE id = $2',
+                [category.budget, category.id], () => {})
+        }
+    )
 });
 
 app.get("/category/:categoryId/transaction", function(req, res) {
@@ -155,7 +179,7 @@ app.delete("/transaction/:transactionId", function(req, res) {
   psqlPool.query(
       'DELETE FROM "transaction" WHERE id=$1',
       [req.params.transactionId],
-      (err, sql) => {
+      () => {
         res.json("deleted!");
       }
   );
