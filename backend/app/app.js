@@ -111,7 +111,7 @@ app.post("/logout", function(req, res) {
 
 // category routes
 
-app.get("/category",  ensureLogin.ensureLoggedIn(),function(req, res) {
+app.get("/category", ensureLogin.ensureLoggedIn(), function(req, res) {
   psqlPool.query('SELECT * from "category"', (err, sql) => {
     res.json(serializeSqlResults("category", sql));
   });
@@ -127,27 +127,57 @@ app.post("/category", ensureLogin.ensureLoggedIn(), function(req, res) {
   );
 });
 
-app.get("/category/:categoryId/transaction", ensureLogin.ensureLoggedIn(), function(req, res) {
-  psqlPool.query(
-    'SELECT * from "transaction" where categoryid=$1',
-    [req.params.categoryId],
-    (err, sql) => {
-      if (!sql) {
-        return res.json("")
-      }
-      res.json(serializeSqlResults("transaction", sql));
-    }
-  );
-});
-
 // transaction routes
 
-app.delete("/transaction/:transactionId", ensureLogin.ensureLoggedIn(), function(req, res) {
-  psqlPool.query(
-    'DELETE FROM "transaction" WHERE id=$1',
-    [req.params.transactionId],
-    (err, sql) => {
-      res.json("deleted!");
-    }
-  );
-});
+app.get(
+  "/category/:categoryId/transaction",
+  ensureLogin.ensureLoggedIn(),
+  function(req, res) {
+    psqlPool.query(
+      'SELECT * from "transaction" where categoryid=$1',
+      [req.params.categoryId],
+      (err, sql) => {
+        if (!sql) {
+          return res.json("");
+        }
+        res.json(serializeSqlResults("transaction", sql));
+      }
+    );
+  }
+);
+
+app.post(
+  "/category/:categoryId/transaction",
+  ensureLogin.ensureLoggedIn(),
+  function(req, res) {
+    psqlPool.query(
+      'INSERT INTO "transaction" (description, amount, createdAt, categoryId) VALUES ($1, $2, $3, $4)',
+      [
+        req.body.description,
+        req.body.amount,
+        req.body.createdAt,
+        req.params.categoryId
+      ],
+      (err, sql) => {
+        if (!sql) {
+          return res.json("");
+        }
+        res.json(serializeSqlResults("transaction", sql));
+      }
+    );
+  }
+);
+
+app.delete(
+  "/transaction/:transactionId",
+  ensureLogin.ensureLoggedIn(),
+  function(req, res) {
+    psqlPool.query(
+      'DELETE FROM "transaction" WHERE id=$1',
+      [req.params.transactionId],
+      (err, sql) => {
+        res.json("deleted!");
+      }
+    );
+  }
+);
