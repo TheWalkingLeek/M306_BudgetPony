@@ -55,6 +55,12 @@ export default {
     return { categories: [], newTransaction: {}, isNegative: false };
   },
 
+  mounted() {
+    this.$root.$on('bv::modal::show', () => {
+      this.fetchCategories();
+    })
+  },
+
   methods: {
     fetchCategories() {
       fetch("/api/category")
