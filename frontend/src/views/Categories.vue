@@ -83,7 +83,8 @@ export default {
     },
     
     switchSelectedCategory(category) {
-      fetch("/api/category/" + category?.id + "/transaction")
+      
+      fetch("/api/category/" + (category.id || category) + "/transaction")
         .then(response => response.json())
         .then(response => {
             this.transactions = response.transaction || []
