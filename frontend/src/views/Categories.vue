@@ -21,7 +21,7 @@
               </div>
             </div>
             <div class="card-footer">
-              <button v-on:click="createCategory()">Erfassen</button>
+              <button class="btn btn-light" v-if="!this.newCategory" v-on:click="createCategory()">Erfassen</button>
             </div>
           </div>
         </div>
@@ -44,7 +44,7 @@
                     <td>{{ transaction.createdat }}</td>
                     <td>{{ transaction.description }}</td>
                     <td>{{ transaction.amount }}</td>
-                    <td><button v-on:click="deleteTransaction(transaction)">delete</button></td>
+                    <td><button class="btn btn-danger" v-on:click="deleteTransaction(transaction)">delete</button></td>
                   </tr>
                 </tbody>
               </table>
@@ -105,7 +105,10 @@ export default {
           'Content-Type': 'application/json'
           },
           body: JSON.stringify(this.newCategory)})
-        .then(() => this.refreshCategories());
+        .then(() => {
+          this.refreshCategories();
+          this.abortNewCategory();
+        });
     },
     
     abortNewCategory() {
@@ -119,6 +122,7 @@ export default {
 #newCategoryForm {
   margin-top: 20%;
   border: black solid 1px;
-  border-radius: 
+  border-radius: 5px;
+  padding: 3%;
 }
 </style>
