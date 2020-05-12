@@ -22,7 +22,6 @@ The app uses VueJS as frontend and nodejs express as backend. The Database is Po
 
 ### Database
 
-- `cd backend/db`
+- `cd backend/`
 - `docker-compose up -d`
-- `cd ..`
 - `npm run db-init`
