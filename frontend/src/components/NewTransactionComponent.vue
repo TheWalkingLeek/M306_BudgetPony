@@ -6,10 +6,10 @@
     title="Transaktion erfassen"
   >
     <b-container>
-      <b-row>
+      <b-row class="mb-2">
         <b-col cols="3">Kategorie</b-col>
         <b-col>
-          <b-form-select v-model="newTransaction.categoryId" class="mb-3">
+          <b-form-select v-model="newTransaction.categoryId">
             <b-form-select-option
               v-for="category in categories"
               v-bind:key="category.id"
@@ -19,19 +19,19 @@
           </b-form-select>
         </b-col>
       </b-row>
-      <b-row>
+      <b-row class="mb-2">
         <b-col cols="3">Betrag</b-col>
         <b-col>
-          <input v-model="newTransaction.amount" placeholder="0.00" />
+          <b-form-input v-model="newTransaction.amount" placeholder="0.00" />
         </b-col>
       </b-row>
-      <b-row>
+      <b-row class="mb-2">
         <b-col cols="3">Beschreibung</b-col>
         <b-col>
-          <input v-model="newTransaction.description" placeholder="..." />
+          <b-form-input v-model="newTransaction.description" placeholder="..." />
         </b-col>
       </b-row>
-      <b-row>
+      <b-row class="mb-2">
         <b-col cols="3">Datum</b-col>
         <b-col>
           <b-form-datepicker
@@ -40,9 +40,8 @@
           ></b-form-datepicker>
         </b-col>
       </b-row>
-      <b-row>
-        <b-col cols="3"></b-col>
-        <b-col>
+      <b-row class="mb-2">
+        <b-col offset="3">
           <b-form-checkbox v-model="isNegative">
             Ausgabe
           </b-form-checkbox>
