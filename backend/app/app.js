@@ -146,6 +146,22 @@ app.get(
   }
 );
 
+/* Get data for graphs */
+app.get('/graph/:userId',
+  // ensureLogin.ensureLoggedIn(),
+  function(req, res) {
+    psqlPool.query(
+      `select t.*, c.name as cName, c.budget as cBudget from "transaction" as t
+      left join category as c on c.id = t.categoryId
+      where c.userId = $1;`,
+      [req.params.userId],
+      (err, sql) => {
+        res.json(sql.rows);
+      },
+    );
+  }
+);
+
 app.post(
   "/category/:categoryId/transaction",
   ensureLogin.ensureLoggedIn(),

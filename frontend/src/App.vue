@@ -5,7 +5,7 @@
     </div>
     <div class="router-view-content">
       <router-view />
-      <NewTransactionComponent/>
+      <NewTransactionComponent />
     </div>
     <div class="footer">
       <FooterComponent />
