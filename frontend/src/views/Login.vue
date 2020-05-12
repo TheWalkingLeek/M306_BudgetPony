@@ -48,7 +48,7 @@ export default {
         method: "POST",
         body: JSON.stringify(this.form),
         headers: {
-          'Accept': 'application/json',
+          Accept: "application/json",
           "Content-Type": "application/json"
         }
       });

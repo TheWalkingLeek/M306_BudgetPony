@@ -10,12 +10,12 @@ export default new Vuex.Store({
   mutations: {
     login(state, email) {
       state.email = email;
-      localStorage.setItem("email", email)
+      localStorage.setItem("email", email);
     },
 
     logout(state) {
       state.email = undefined;
-      localStorage.removeItem("email")
+      localStorage.removeItem("email");
     }
   },
   getters: {

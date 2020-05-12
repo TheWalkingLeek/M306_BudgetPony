@@ -28,7 +28,10 @@
       <b-row class="mb-2">
         <b-col cols="3">Beschreibung</b-col>
         <b-col>
-          <b-form-input v-model="newTransaction.description" placeholder="..." />
+          <b-form-input
+            v-model="newTransaction.description"
+            placeholder="..."
+          />
         </b-col>
       </b-row>
       <b-row class="mb-2">

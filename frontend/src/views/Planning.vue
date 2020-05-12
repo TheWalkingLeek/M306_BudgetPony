@@ -50,7 +50,7 @@
       <div v-if="errors.length">
         <b>Please correct the following error(s):</b>
         <ul>
-        <li v-for="error in errors" :key="error">{{ error }}</li>
+          <li v-for="error in errors" :key="error">{{ error }}</li>
         </ul>
       </div>
     </b-container>
@@ -64,7 +64,7 @@ export default {
     this.refreshCategories();
     return {
       errors: [],
-      categories: [],
+      categories: []
     };
   },
 
@@ -79,13 +79,13 @@ export default {
     updatePlanning() {
       this.errors = [];
       this.categories.forEach(category => {
-        if(category.budget < 0){
-          this.errors.push('Budget can not be less than 0');
+        if (category.budget < 0) {
+          this.errors.push("Budget can not be less than 0");
           return;
         }
       });
 
-      if(this.errors.length === 0){
+      if (this.errors.length === 0) {
         fetch("/api/categories", {
           method: "PUT",
           headers: {

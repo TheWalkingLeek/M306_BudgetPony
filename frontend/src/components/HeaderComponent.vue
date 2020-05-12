@@ -12,14 +12,19 @@
             @click="logout(link.title)"
           >
             {{ link.title }}
-            <span v-if="link.name === $route.name" class="sr-only">(current)</span>
+            <span v-if="link.name === $route.name" class="sr-only"
+              >(current)</span
+            >
           </b-nav-item>
           <b-button
             v-b-modal.new-transaction-modal
             variant="primary"
             v-if="this.$store.getters.loggedIn"
-          >Erfassen</b-button>
-          <b-nav-item v-if="this.$store.state.email">{{this.$store.state.email}}</b-nav-item>
+            >Erfassen</b-button
+          >
+          <b-nav-item v-if="this.$store.state.email">{{
+            this.$store.state.email
+          }}</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -42,7 +47,7 @@ export default {
       }
       return [
         { name: "home", title: "Home" },
-        { name: "collect", title: "Collect" },
+        // { name: "collect", title: "Collect" },
         { name: "categories", title: "Categories" },
         { name: "planning", title: "Planning" },
         { title: "Logout" }
@@ -52,7 +57,6 @@ export default {
   methods: {
     logout(name) {
       if (name !== "Logout") return;
-      console.log("Logout");
       fetch("/api/logout", {
         method: "POST",
         headers: {

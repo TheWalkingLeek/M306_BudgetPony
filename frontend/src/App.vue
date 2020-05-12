@@ -20,12 +20,16 @@ import NewTransactionComponent from "./components/NewTransactionComponent";
 export default {
   components: { HeaderComponent, FooterComponent, NewTransactionComponent },
   mounted() {
-    if(this.$store.getters.loggedIn){
-      return;
-    }else if(["register", "login"].includes(this.$route.name)) {
-      return this.$router.push({name: this.$route.name});
-    }else{
-      return this.$router.push({name: "login"});
+    if (this.$store.getters.loggedIn) {
+      if (["register", "login"].includes(this.$route.name)) {
+        return this.$router.push({ name: "home" });
+      } else {
+        return;
+      }
+    } else if (["register", "login"].includes(this.$route.name)) {
+      return this.$router.push({ name: this.$route.name });
+    } else {
+      return this.$router.push({ name: "login" });
     }
   }
 };

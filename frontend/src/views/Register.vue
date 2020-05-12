@@ -51,7 +51,7 @@ export default {
       });
 
       const body = await response.json();
-      console.log(body);
+
       if (response.ok) {
         this.$bvToast.toast(`Sie haben sich erfolgreich Registriert`, {
           title: "Erfolgreich Registriert",
@@ -60,7 +60,7 @@ export default {
           variant: "success"
         });
         this.$store.commit("login", body.email);
-        this.$router.push({name: "home"});
+        this.$router.push({ name: "home" });
         return;
       } else if (body.includes("already exists.")) {
         return this.$bvToast.toast(
