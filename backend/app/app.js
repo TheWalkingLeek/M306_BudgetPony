@@ -80,6 +80,14 @@ app.get("/user", ensureLogin.ensureLoggedIn(), function(req, res) {
   );
 });
 
+app.put('/user', ensureLogin.ensureLoggedIn(), function(req, res) {
+        psqlPool.query('UPDATE "user" SET salaryday = $1 WHERE id = $2',
+            [req.body.salaryday, req.user.id], () => {
+                res.json("updated salary day");
+            });
+    }
+);
+
 app.post("/register", function(req, res) {
   psqlPool.query(
     'INSERT INTO "user" (email, password) VALUES ($1, $2)',
@@ -112,7 +120,9 @@ app.post("/logout", function(req, res) {
 // category routes
 
 app.get("/category", ensureLogin.ensureLoggedIn(), function(req, res) {
-  psqlPool.query('SELECT * from "category"', (err, sql) => {
+  psqlPool.query('SELECT * from "category" WHERE userid = $1',
+      [req.user.id],
+      (err, sql) => {
     res.json(serializeSqlResults("category", sql));
   });
 });
@@ -125,6 +135,15 @@ app.post("/category", ensureLogin.ensureLoggedIn(), function(req, res) {
       res.json("created!");
     }
   );
+});
+
+app.put("/categories", function(req, res) {
+    req.body.forEach( category => {
+            psqlPool.query(
+                'UPDATE "category" SET budget = $1 WHERE id = $2',
+                [category.budget, category.id], () => {})
+        }
+    )
 });
 
 // transaction routes
