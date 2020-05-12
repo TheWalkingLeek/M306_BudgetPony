@@ -351,7 +351,6 @@ export default {
   name: "TotalExpensesGraphComponent",
   mounted() {
     this.getData(this.showTables);
-    this.width = this.$parent.$el.offsetWidth;
   },
   methods: {
     getData(callback) {
