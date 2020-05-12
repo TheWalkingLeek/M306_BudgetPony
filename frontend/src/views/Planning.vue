@@ -66,6 +66,12 @@
           <b-button variant="secondary" class="m-1">Abbrechen</b-button>
         </b-row>
       </b-container>
+      <div v-if="errors.length">
+        <b>Please correct the following error(s):</b>
+        <ul>
+        <li v-for="error in errors" :key="error">{{ error }}</li>
+        </ul>
+      </div>
     </b-container>
   </div>
 </template>
@@ -77,6 +83,7 @@ export default {
     this.refreshCategories();
     this.getUser();
     return {
+      errors: [],
       categories: [],
       user: {}
     };
@@ -97,25 +104,34 @@ export default {
           this.user = response;
         });
     },
-
     updatePlanning() {
-      fetch("/api/user", {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(this.user)
-      }).then(() => this.getUser());
+      this.errors = [];
+      this.categories.forEach(category => {
+        if(category.budget < 0){
+          this.errors.push('Budget can not be less than 0');
+          return;
+        }
+      });
 
-      fetch("/api/categories", {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(this.categories)
-      }).then(() => this.refreshCategories());
+      if(this.errors.length === 0){
+        fetch("/api/user", {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(this.user)
+        }).then(() => this.getUser());
+
+        fetch("/api/categories", {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(this.categories)
+        }).then(() => this.refreshCategories());
+      }
     }
   }
 };
