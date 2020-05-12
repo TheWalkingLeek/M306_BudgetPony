@@ -49,8 +49,8 @@
       </b-row>
       <b-container>
         <b-row>
-            <b-button variant="primary" class="m-1 ml-auto">Speichern</b-button>
-            <b-button variant="secondary" class="m-1">Abbrechen</b-button>
+          <b-button variant="primary" class="m-1 ml-auto">Speichern</b-button>
+          <b-button variant="secondary" class="m-1">Abbrechen</b-button>
         </b-row>
       </b-container>
     </b-container>
