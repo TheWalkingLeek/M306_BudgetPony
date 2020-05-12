@@ -52,8 +52,6 @@ export default {
         }
       });
 
-      console.log(response);
-
       if (response.ok) {
         this.$bvToast.toast(`Sie haben sich erfolgreich Eingeloggt`, {
           title: "Erfolgreich Eingeloggt",
@@ -61,6 +59,8 @@ export default {
           appendToast: true,
           variant: "success"
         });
+
+        this.$store.commit("loggedIn", true)
 
         return this.$router.push("/");
       } else if (response.status === 401) {

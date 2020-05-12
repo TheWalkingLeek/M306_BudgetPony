@@ -5,19 +5,20 @@
     </div>
     <div class="router-view-content">
       <router-view />
+      <NewTransactionComponent/>
     </div>
     <div class="footer">
       <FooterComponent />
     </div>
   </div>
 </template>
-
 <script>
 import HeaderComponent from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponent";
+import NewTransactionComponent from "./components/NewTransactionComponent";
 
 export default {
-  components: { HeaderComponent, FooterComponent }
+  components: { HeaderComponent, FooterComponent, NewTransactionComponent }
 };
 </script>
 

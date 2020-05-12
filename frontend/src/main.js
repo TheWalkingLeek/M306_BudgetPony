@@ -2,6 +2,7 @@ import "@babel/polyfill";
 import "mutationobserver-shim";
 import "./custom.scss";
 import "./plugins/bootstrap";
+import "./plugins/cookies";
 import Vue from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
