@@ -363,11 +363,12 @@ export default {
       const categories = {};
       const currentColors = [...colors];
       let val = 0;
+      console.log(data);
       for (const d of data) {
         let obj = categories[d.categoryid];
         if (!obj)
           obj = categories[d.categoryid] = {
-            name: d.description,
+            name: d.cname,
             amounts: [],
             colors: []
           };
@@ -385,18 +386,18 @@ export default {
       const arr = Object.values(categories);
       this.renderChart(
         {
-          datasets: [
-            ...arr.map(x => ({
+          datasets: arr.map(x => ({
               label: x.name,
               data: [...x.amounts],
               borderColor: x.colors,
+              lineTension: 0.1,  
               backgroundColor: "transparent"
-            }))
-          ].sort((a, b) => (a.label > b.label ? 1 : -1))
+            })).sort((a, b) => (a.label > b.label ? 1 : -1))
         },
         {
           responsive: true,
           maintainAspectRatio: false,
+          bezierCurve: false,
           scales: {
             xAxes: [
               {
