@@ -84,14 +84,14 @@ export default {
 
   methods: {
     refreshCategories() {
-      fetch("/api/category/" + 1)
+      fetch("/api/category/")
         .then(response => response.json())
         .then(response => {
           this.categories = response.category;
         });
     },
     getUser() {
-      fetch("/api/user/" + 1)
+      fetch("/api/user")
         .then(response => response.json())
         .then(response => {
           this.user = response;
@@ -99,7 +99,7 @@ export default {
     },
 
     updatePlanning() {
-      fetch("/api/user/" + 1, {
+      fetch("/api/user", {
         method: "PUT",
         headers: {
           Accept: "application/json",
