@@ -2,7 +2,7 @@
   <div class="route-container">
     <h1>BudgetPony</h1>
     <b-container class="mt-3">
-      <b-row align-h="around">
+      <b-row>
         <b-col cols="8">
           <b-container fluid>
             <b-row
@@ -35,25 +35,6 @@
             >
           </div>
         </b-col>
-        <b-col cols="3">
-          <b-card header="Lohntag" class="text-center">
-            <b-row>
-              <b-col sm="3" class="mt-1">
-                <label>Tag:</label>
-              </b-col>
-              <b-col sm="9">
-                <b-form-input
-                  class="text-right"
-                  type="number"
-                  step="1"
-                  min="1"
-                  max="28"
-                  v-model.number="user.salaryday"
-                ></b-form-input>
-              </b-col>
-            </b-row>
-          </b-card>
-        </b-col>
       </b-row>
       <b-container>
         <b-row>
@@ -81,11 +62,9 @@ export default {
   name: "Planning",
   data() {
     this.refreshCategories();
-    this.getUser();
     return {
       errors: [],
       categories: [],
-      user: {}
     };
   },
 
@@ -95,13 +74,6 @@ export default {
         .then(response => response.json())
         .then(response => {
           this.categories = response.category;
-        });
-    },
-    getUser() {
-      fetch("/api/user")
-        .then(response => response.json())
-        .then(response => {
-          this.user = response;
         });
     },
     updatePlanning() {
@@ -114,15 +86,6 @@ export default {
       });
 
       if(this.errors.length === 0){
-        fetch("/api/user", {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(this.user)
-        }).then(() => this.getUser());
-
         fetch("/api/categories", {
           method: "PUT",
           headers: {

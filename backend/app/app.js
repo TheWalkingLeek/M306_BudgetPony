@@ -167,6 +167,7 @@ app.get(
 
 /* Get data for graphs */
 app.get('/graph',
+  ensureLogin.ensureLoggedIn(),
   function(req, res) {
     psqlPool.query(
       `select t.*, c.name as cName, c.budget as cBudget from "transaction" as t
@@ -179,6 +180,23 @@ app.get('/graph',
     );
   }
 );
+
+app.get(
+    "/category/:categoryId/monthlyTransaction/:date",
+    ensureLogin.ensureLoggedIn(),
+    function (req, res) {
+        psqlPool.query(
+            'SELECT * FROM "transaction" WHERE categoryid=$1 AND description=\'Salary\' AND createdat=$2',
+            [req.params.categoryId, req.params.date],
+            (err, sql) => {
+                if(!sql){
+                    return res.json("");
+                }
+                res.json(serializeSqlResults("transaction", sql));
+            }
+        )
+    }
+)
 
 app.post(
   "/category/:categoryId/transaction",
