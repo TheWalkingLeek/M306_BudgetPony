@@ -3,7 +3,7 @@ const passport = require("passport");
 const Strategy = require("passport-local").Strategy;
 const ensureLogin = require("connect-ensure-login");
 const express = require("express");
-const { Pool } = require("pg");
+const {Pool}= require("pg");
 const cookieSession = require("cookie-session");
 
 const psqlPool = new Pool({
@@ -11,8 +11,16 @@ const psqlPool = new Pool({
   host: "localhost",
   database: "budget_pony_dev",
   password: "budget_pony",
-  port: 5432
+  port: 5432,
+  query(e) {console.log(e)}
 });
+
+const Query = require('pg').Query;
+const submit = Query.prototype.submit;
+Query.prototype.submit = function() {
+  console.log(this.values.reduce((q, v, i) => q.replace(`$${i + 1}`, v), this.text));
+  submit.apply(this, arguments);
+};
 
 psqlPool.connect();
 
@@ -109,7 +117,7 @@ app.post("/register", function(req, res) {
 });
 
 app.post("/login", passport.authenticate("local"), function(req, res) {
-  res.json("Successfully logged in");
+  res.json({msg:"Successfully logged in", email: req.user.email});
 });
 
 app.post("/logout", function(req, res) {

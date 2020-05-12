@@ -20,7 +20,7 @@ import NewTransactionComponent from "./components/NewTransactionComponent";
 export default {
   components: { HeaderComponent, FooterComponent, NewTransactionComponent },
   mounted() {
-    if(this.$store.state.loggedIn){
+    if(this.$store.getters.loggedIn){
       return;
     }else if(["register", "login"].includes(this.$route.name)) {
       return this.$router.push({name: this.$route.name});

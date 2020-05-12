@@ -5,12 +5,21 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    loggedIn: false
+    email: localStorage.getItem("email")
   },
   mutations: {
-    loggedIn(state) {
-      state.loggedIn = state;
+    login(state, email) {
+      state.email = email;
+      localStorage.setItem("email", email)
+    },
+
+    logout(state) {
+      state.email = undefined;
+      localStorage.removeItem("email")
     }
+  },
+  getters: {
+    loggedIn: s => s && !!s.email
   },
   actions: {},
   modules: {}
