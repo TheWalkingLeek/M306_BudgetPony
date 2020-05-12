@@ -48,6 +48,7 @@ export default {
         method: "POST",
         body: JSON.stringify(this.form),
         headers: {
+          'Accept': 'application/json',
           "Content-Type": "application/json"
         }
       });
@@ -60,7 +61,7 @@ export default {
           variant: "success"
         });
 
-        this.$store.commit("loggedIn", true);
+        this.$store.commit("login", (await response.json()).email);
 
         return this.$router.push("/");
       } else if (response.status === 401) {

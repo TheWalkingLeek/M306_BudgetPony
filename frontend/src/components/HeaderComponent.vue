@@ -17,8 +17,9 @@
           <b-button
             v-b-modal.new-transaction-modal
             variant="primary"
-            v-if="this.$store.state.loggedIn"
+            v-if="this.$store.getters.loggedIn"
           >Erfassen</b-button>
+          <b-nav-item v-if="this.$store.state.email">{{this.$store.state.email}}</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -33,7 +34,7 @@ export default {
   },
   computed: {
     links() {
-      if (!this.$store.state.loggedIn) {
+      if (!this.$store.getters.loggedIn) {
         return [
           { name: "login", title: "Login" },
           { name: "register", title: "Register" }
@@ -50,7 +51,7 @@ export default {
   },
   methods: {
     logout(name) {
-      if(name !== "Logout") return;
+      if (name !== "Logout") return;
       console.log("Logout");
       fetch("/api/logout", {
         method: "POST",
@@ -58,7 +59,7 @@ export default {
           "Content-Type": "application/json"
         }
       });
-      this.$store.commit("loggedIn", false);
+      this.$store.commit("logout");
       return this.$router.go("/login");
     }
   }
