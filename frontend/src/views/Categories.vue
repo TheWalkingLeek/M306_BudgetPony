@@ -65,7 +65,9 @@
                     v-for="transaction in transactions"
                     v-bind:key="transaction.id"
                   >
-                    <td>{{ new Date(transaction.createdat).toLocaleDateString() }}</td>
+                    <td>
+                      {{ new Date(transaction.createdat).toLocaleDateString() }}
+                    </td>
                     <td>{{ transaction.description }}</td>
                     <td>{{ transaction.amount }}</td>
                     <td>
@@ -105,21 +107,31 @@ export default {
 
   methods: {
     // 2020-05-05 date format
-    checkMonthlyTransaction(categories){
+    checkMonthlyTransaction(categories) {
       let today = new Date();
       var dd = "01";
-      var mm = (today.getMonth()+1).toString().padStart(2,"0");
-      var yyyy = today.getFullYear().toString().padStart(4,"0");
+      var mm = (today.getMonth() + 1).toString().padStart(2, "0");
+      var yyyy = today
+        .getFullYear()
+        .toString()
+        .padStart(4, "0");
       let salaryDay = yyyy + "-" + mm + "-" + dd;
       categories.forEach(category => {
-        fetch("api/category/"+ (category.id || category) +"/monthlyTransaction/" + salaryDay)
-          .then(response => response.json())
-          .then(response => {
-            let transaction = response.transaction || [];
-            if(transaction.length != 1){
-              this.addMonthlyTransaction(category, salaryDay);
-            }
-          });
+        if (category.budget > 0) {
+          fetch(
+            "api/category/" +
+              (category.id || category) +
+              "/monthlyTransaction/" +
+              salaryDay
+          )
+            .then(response => response.json())
+            .then(response => {
+              let transaction = response.transaction || [];
+              if (transaction.length != 1) {
+                this.addMonthlyTransaction(category, salaryDay);
+              }
+            });
+        }
       });
     },
     addMonthlyTransaction(category, salaryDay) {
@@ -129,7 +141,12 @@ export default {
           Accept: "application/json",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({'categoryid': category.id, 'description': "Salary", 'amount': category.budget, 'createdAt': salaryDay})
+        body: JSON.stringify({
+          categoryid: category.id,
+          description: "Salary",
+          amount: category.budget,
+          createdAt: salaryDay
+        })
       });
     },
     refreshCategories() {
