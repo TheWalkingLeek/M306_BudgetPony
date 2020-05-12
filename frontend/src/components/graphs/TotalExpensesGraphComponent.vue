@@ -355,7 +355,7 @@ export default {
   },
   methods: {
     getData(callback) {
-      fetch("/api/graph/" + 1 /* UserId */)
+      fetch("/api/graph")
         .then(r => r.json())
         .then(callback);
     },
