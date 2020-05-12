@@ -388,7 +388,7 @@ export default {
         {
           datasets: arr.map(x => ({
               label: x.name,
-              data: [...x.amounts],
+              data: [...x.amounts].sort((a, b) => a.t > b.t ? 1 : -1),
               borderColor: x.colors,
               lineTension: 0.1,  
               backgroundColor: "transparent"
