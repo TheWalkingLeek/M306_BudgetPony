@@ -98,6 +98,7 @@ export default {
     abortNewTransaction() {
       this.$refs["new-transaction-modal"].hide();
       this.newTransaction = {};
+      this.$router.go();
     }
   }
 };
