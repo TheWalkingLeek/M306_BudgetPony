@@ -15,6 +15,7 @@
               >(current)</span
             >
           </b-nav-item>
+          <b-button v-b-modal.new-transaction-modal variant="primary" v-if="this.$store.state.loggedIn">Erfassen</b-button>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -25,16 +26,22 @@
 export default {
   name: "HeaderComponent",
   data: () => {
-    return {
-      links: [
+    return {};
+  },
+  computed: {
+    links() {
+      if (!this.$store.state.loggedIn) {
+        return [        { name: "login", title: "Login" },
+        { name: "register", title: "Register" }]
+      }
+      return [
         { name: "home", title: "Home" },
         { name: "collect", title: "Collect" },
         { name: "categories", title: "Categories" },
         { name: "planning", title: "Planning" },
-        { name: "login", title: "Login" },
-        { name: "register", title: "Register" }
+        {name:"logout", title:"Logout"}
       ]
-    };
+    }
   }
 };
 </script>
