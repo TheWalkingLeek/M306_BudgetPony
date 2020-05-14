@@ -4,7 +4,7 @@
     <b-form @submit.prevent="login()" class="login-form">
       <b-form-group
         id="input-group-email"
-        label="Email address:"
+        label="Email addresse:"
         label-for="input-email"
       >
         <b-form-input
@@ -30,7 +30,7 @@
       </b-form-group>
       <b-button type="submit" variant="primary">Login</b-button>
       <hr />
-      <p>New around here? <router-link to="/register">Register</router-link></p>
+      <p>Neu hier? <router-link to="/register">Registrieren</router-link></p>
     </b-form>
   </div>
 </template>

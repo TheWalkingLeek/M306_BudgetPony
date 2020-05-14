@@ -1,10 +1,10 @@
 <template>
   <div class="register">
-    <h2>Register</h2>
+    <h2>Registrieren</h2>
     <b-form @submit.prevent="register()" class="login-form">
       <b-form-group
         id="input-group-email"
-        label="Email address:"
+        label="Email addresse:"
         label-for="input-email"
       >
         <b-form-input
@@ -28,7 +28,7 @@
           placeholder="Password"
         ></b-form-input>
       </b-form-group>
-      <b-button type="submit" variant="primary">Register</b-button>
+      <b-button type="submit" variant="primary">Registrieren</b-button>
     </b-form>
   </div>
 </template>

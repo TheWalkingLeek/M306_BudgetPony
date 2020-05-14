@@ -1,6 +1,5 @@
 <template>
   <div class="route-container">
-    <h1>BudgetPony</h1>
     <b-container class="mt-3">
       <b-row>
         <b-col cols="8">

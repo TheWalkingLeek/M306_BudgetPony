@@ -75,7 +75,7 @@
                         class="btn btn-danger"
                         v-on:click="deleteTransaction(transaction)"
                       >
-                        delete
+                        Löschen
                       </button>
                     </td>
                   </tr>

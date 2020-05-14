@@ -42,14 +42,14 @@ export default {
       if (!this.$store.getters.loggedIn) {
         return [
           { name: "login", title: "Login" },
-          { name: "register", title: "Register" }
+          { name: "register", title: "Registrieren" }
         ];
       }
       return [
         { name: "home", title: "Home" },
         // { name: "collect", title: "Collect" },
-        { name: "categories", title: "Categories" },
-        { name: "planning", title: "Planning" },
+        { name: "categories", title: "Kategorien" },
+        { name: "planning", title: "Planung" },
         { title: "Logout" }
       ];
     }
