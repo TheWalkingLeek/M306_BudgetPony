@@ -14,11 +14,11 @@ const SERIALIZED_COLUMNS = {
   transaction: SERIALIZED_TRANSACTION_COLUMNS
 };
 
-export function serializeSqlResult(model, sqlResult) {
+function serializeSqlResult(model, sqlResult) {
   return serializeSqlRow(model, sqlResult.rows[0]);
 }
 
-export function serializeSqlResults(model, sqlResult) {
+function serializeSqlResults(model, sqlResult) {
   let serializedRows = sqlResult.rows.map(row => serializeSqlRow(model, row));
   let json = {};
   json[model] = serializedRows;
@@ -33,4 +33,8 @@ function serializeSqlRow(model, row) {
   return res;
 }
 
-export { serializeSqlRow };
+module.exports = {
+  serializeSqlResult,
+  serializeSqlResults,
+  serializeSqlRow
+};

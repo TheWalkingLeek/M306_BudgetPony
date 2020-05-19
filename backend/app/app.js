@@ -1,4 +1,4 @@
-import { serializeSqlResults, serializeSqlResult } from "./serializer.js";
+const { serializeSqlResults, serializeSqlResult } = require("./serializer.js");
 const passport = require("passport");
 const Strategy = require("passport-local").Strategy;
 const ensureLogin = require("connect-ensure-login");
@@ -73,7 +73,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.listen(3000, function() {
+app.listen(3003, function() {
   console.log("Example app listening on port 3000!");
 });
 
