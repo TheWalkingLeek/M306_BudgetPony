@@ -73,7 +73,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.listen(3003, function() {
+app.listen(3000, function() {
   console.log("Example app listening on port 3000!");
 });
 
