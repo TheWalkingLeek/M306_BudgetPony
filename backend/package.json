@@ -9,7 +9,7 @@
     "db-clear": "docker exec -i budget_pony_db dropdb -e budget_pony_dev -U pony -p 5432",
     "db-create": "docker exec -i budget_pony_db createdb -e budget_pony_dev -U pony -p 5432",
     "db-init": "docker exec -i budget_pony_db psql -d budget_pony_dev -U pony -p 5432 < db/db-init.sql",
-    "db-data": "docker exec -i budget_pony_db psql -d budget_pony_dev -U pony -p 5432 < db/db-sample.sql",
+    "db-data": "docker exec -i budget_pony_db psql -d budget_pony_dev -U pony -p 5432 < db/db-sample-demo.sql",
     "db": "npm run db-clear && npm run db-create && npm run db-init && npm run db-data"
   },
   "author": "",
